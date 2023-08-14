@@ -9,12 +9,43 @@ const router = createRouter({
             name: "home",
             component: HomeView,
         },
-        // {
-        //   path: '/about',
-        //   name: 'about',
-        //   component: () => import('../pages/AboutView.vue')
-        // }
+        {
+            path: "/about",
+            name: "about",
+            component: () => import("../pages/AboutView.vue"),
+            beforeEnter: (to, from) => {
+                console.log("我是關於路由的守衛beforeEnter");
+                return true;
+            },
+            children: [
+                {
+                    path: "author", //  /about/author
+                    name: "aboutAuthor",
+                    component: () => import("../pages/AboutViewAuthor.vue"),
+                },
+            ],
+        },
+        {
+            path: "/introduce",
+            name: "introduce",
+            component: () => import("../pages/IntroduceView.vue"),
+        },
+        {
+            path: "/prod/:id",
+            name: "product",
+            component: () => import("../pages/Product.vue"),
+            props: true,
+        },
     ],
 });
 
+router.beforeEach((to, from, next) => {
+    console.log("我是beforeEach");
+    next();
+});
+
+router.beforeResolve((to, from, next) => {
+    console.log("我是beforeResolve");
+    next();
+});
 export default router;
