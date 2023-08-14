@@ -1,0 +1,1 @@
+import{_ as t,o as a,c as o,a as e,b as s}from"./index-3172f877.js";const n={data(){return{}}},r={style:{padding:"30px"}},c=s("br",null,null,-1);function _(d,l,p,i,u,f){return a(),o("div",r,[e("妳好，Anna！"),c,e("恭喜你成功啦！")])}const m=t(n,[["render",_]]);export{m as default};

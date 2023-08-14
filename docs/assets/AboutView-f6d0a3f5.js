@@ -1,0 +1,1 @@
+import{_ as t,o as e,c as o}from"./index-3172f877.js";const s={data(){return{}}},c={style:{padding:"30px"}};function n(r,a,_,p,d,i){return e(),o("section",c,"你現在在關於頁哦！")}const u=t(s,[["render",n]]);export{u as default};

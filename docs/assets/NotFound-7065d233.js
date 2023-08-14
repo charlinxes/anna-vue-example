@@ -1,1 +1,0 @@
-import{_ as t,o as e,c as o}from"./index-85df9133.js";const n={data(){return{}}},s={style:{padding:"30px"}};function c(r,a,_,p,d,i){return e(),o("section",s,"404 NOT FOUND!")}const u=t(n,[["render",c]]);export{u as default};
