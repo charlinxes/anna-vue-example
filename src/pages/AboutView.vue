@@ -1,5 +1,5 @@
 <template>
-    <section style="padding:30px">你現在在首頁哦！</section>
+    <section style="padding:30px">你現在在關於頁哦！</section>
 </template>
 
 <script>

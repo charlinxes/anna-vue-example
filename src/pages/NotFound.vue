@@ -1,5 +1,5 @@
 <template>
-    <section style="padding:30px">你現在在首頁哦！</section>
+    <section style="padding:30px">404 NOT FOUND!</section>
 </template>
 
 <script>
@@ -9,4 +9,3 @@ export default {
     }
 }
 </script>
-

@@ -2,9 +2,18 @@ import { createStore } from "vuex";
 
 const store = createStore({
     state() {
-        return {};
+        return {
+            isLogin: false,
+        };
     },
-    mutations: {},
+    mutations: {
+        login(state) {
+            state.isLogin = true;
+        },
+        logout(state) {
+            state.isLogin = false;
+        },
+    },
 });
 
 export default store;
