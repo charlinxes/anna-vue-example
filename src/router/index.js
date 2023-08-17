@@ -14,6 +14,20 @@ const router = createRouter({
             path: "/about",
             name: "about",
             component: () => import("../pages/AboutView.vue"),
+            children: [
+                {
+                    path: "/about/author",
+                    name: "aboutAuthor",
+                    component: () =>
+                        import("../pages/AboutView/AboutViewAuthor.vue"),
+                },
+                {
+                    path: "/about/context",
+                    name: "aboutContext",
+                    component: () =>
+                        import("../pages/AboutView/AboutViewContext.vue"),
+                },
+            ],
         },
         {
             path: "/personal",
