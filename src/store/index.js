@@ -4,6 +4,7 @@ const store = createStore({
     state() {
         return {
             isLogin: false,
+            flightCache: null,
         };
     },
     mutations: {
@@ -12,6 +13,12 @@ const store = createStore({
         },
         logout(state) {
             state.isLogin = false;
+        },
+        saveFlightCache(state, res) {
+            state.flightCache = res;
+        },
+        clearFlightCache(state) {
+            state.flightCache = null;
         },
     },
 });

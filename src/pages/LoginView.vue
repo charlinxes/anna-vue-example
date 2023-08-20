@@ -24,6 +24,7 @@ export default {
         authenticate() {
             if (this.userName === 'anna' && this.password === 'anna001114') {
                 this.$store.commit('login')
+                sessionStorage.setItem('isLogin', 'true')
                 this.$router.push({ name: 'home' })
             } else {
                 this.showAlert = true

@@ -22,7 +22,7 @@
         </div>
         <div v-if="show_myDestination">
             我的目的地:
-            <select @change="findClosestFlight">
+            <select @change="navToQuery" ref="select">
                 <option value="" disabled selected>請選擇</option>
                 <option v-for="item in destIdList" :value="item">{{ item }}</option>
             </select>
@@ -34,6 +34,12 @@
 
 <script>
 export default {
+    watch: {
+        '$route.query'(newVal) {
+            this.$refs.select.value = newVal.id
+            this.findClosestFlight(newVal.id)
+        }
+    },
     data() {
         return {
             show_myDestination: false,
@@ -46,29 +52,34 @@ export default {
     },
     methods: {
         sendXhrRequest() {
-            return new Promise((resolve, reject) => {
-                const xhrReqObj = new XMLHttpRequest();
-                xhrReqObj.open(
-                    "GET",
-                    "https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/Departure"
-                );
-                xhrReqObj.send();
-                xhrReqObj.addEventListener("load", function () {
-                    if (xhrReqObj.status >= 200 && xhrReqObj.status < 400) {
-                        resolve(JSON.parse(xhrReqObj.responseText));
-                    } else {
-                        reject(
-                            `錯誤狀態${xhrReqObj.status}，錯誤信息${xhrReqObj.statusText}`
-                        );
-                    }
+            if (this.$store.state.flightCache) {
+                return Promise.resolve(this.$store.state.flightCache)
+            } else {
+                return new Promise((resolve, reject) => {
+                    const xhrReqObj = new XMLHttpRequest();
+                    xhrReqObj.open(
+                        "GET",
+                        "https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/Departure"
+                    );
+                    xhrReqObj.send();
+                    xhrReqObj.addEventListener("load", function () {
+                        if (xhrReqObj.status >= 200 && xhrReqObj.status < 400) {
+                            resolve(JSON.parse(xhrReqObj.responseText));
+                        } else {
+                            reject(
+                                `錯誤狀態${xhrReqObj.status}，錯誤信息${xhrReqObj.statusText}`
+                            );
+                        }
+                    });
                 });
-            });
+            }
         },
         sendFlightRequest() {
             this.show_myDestination = false
             this.sendXhrRequest()
                 .then((res) => {
                     this.flightData = res;
+                    this.$store.commit('saveFlightCache', res)
                     this.resStatusMsg = "啊哈哈<(*￣▽￣*)/";
                     this.flightBoxMsg = this.getResMsg(res);
                     this.destIdList = this.getDestIdList(res);
@@ -105,16 +116,19 @@ export default {
 
             return `${hour}:${minute}`;
         },
-        findClosestFlight(e) {
+        navToQuery(e) {
+            this.$router.push({ name: this.$route.name, query: { id: e.target.value } })
+        },
+        findClosestFlight(id) {
             const filterList = this.flightData.filter((cur) => {
                 return (
-                    cur.ArrivalAirportID === e.target.value &&
+                    cur.ArrivalAirportID === id &&
                     new Date(cur.ScheduleDepartureTime).getTime() >
                     new Date().getTime() + 1 * 60 * 60 * 1000
                 );
             });
             if (filterList.length === 0) {
-                this.closestFlightMsg = `很遺憾，台灣已經沒有1小時後起飛去往${e.target.value}的航班了，去重新安排旅程吧`;
+                this.closestFlightMsg = `很遺憾，台灣已經沒有1小時後起飛去往${id}的航班了，去重新安排旅程吧`;
             } else {
                 const target = filterList.sort((a, b) => {
                     return (
@@ -123,7 +137,7 @@ export default {
                     );
                 })[0];
                 this.closestFlightMsg = `很幸運，台灣還有${filterList.length
-                    }架航班會在1小時後起飛去往${e.target.value}，最快的航班是${target.AirlineID
+                    }架航班會在1小時後起飛去往${id}，最快的航班是${target.AirlineID
                     }${target.FlightNumber}，起飛時間是${this.formatDate(
                         target.ScheduleDepartureTime
                     )}`;

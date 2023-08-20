@@ -12,6 +12,11 @@
 
 <script>
 export default {
+    created() {
+        if (JSON.parse(sessionStorage.getItem('isLogin'))) {
+            this.$store.commit('login')
+        }
+    },
     data() {
         return {}
     },
@@ -19,6 +24,9 @@ export default {
         log() {
             if (this.$store.state.isLogin) {
                 this.$store.commit('logout')
+                sessionStorage.setItem('isLogin', 'false')
+                this.$store.commit('clearFlightCache')
+                this.$router.push({ name: "home" });
             } else {
                 this.$router.push({ name: 'login' })
             }
