@@ -22,7 +22,7 @@
         </div>
         <div v-if="show_myDestination">
             我的目的地:
-            <select @change="navToQuery" ref="select">
+            <select @change="addQueryToRoute" ref="select">
                 <option value="" disabled selected>請選擇</option>
                 <option v-for="item in destIdList" :value="item">{{ item }}</option>
             </select>
@@ -116,7 +116,7 @@ export default {
 
             return `${hour}:${minute}`;
         },
-        navToQuery(e) {
+        addQueryToRoute(e) {
             this.$router.push({ name: this.$route.name, query: { id: e.target.value } })
         },
         findClosestFlight(id) {

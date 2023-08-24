@@ -4,6 +4,7 @@
             <router-link :to="{ name: 'home' }">首頁</router-link>
             <router-link :to="{ name: 'about' }">關於</router-link>
             <router-link :to="{ name: 'personal' }">個人</router-link>
+            <router-link :to="{ name: 'setting' }">設定</router-link>
         </nav>
         <div class="login" @click="log">{{ $store.state.isLogin ? '登出' : '登入' }}</div>
     </header>
