@@ -10,11 +10,11 @@
             <div style="margin: 20px 0;">已選擇 {{ checkOptions.length + '/' + questionList.length }}</div>
             <div><button :disabled="checkOptions.length < questionList.length" @click="checkAnswer">確認答案</button></div>
         </section>
-        <div v-if="showAnswer">
+        <section v-show="showAnswer">
             <div v-for="option in checkOptions" style="margin-bottom: 20px"> {{ option.topic + '：' +
                 option.checkOption.display }} </div>
             <div><button @click="showAnswer = false">返回</button></div>
-        </div>
+        </section>
     </main>
 </template>
 
@@ -38,7 +38,7 @@ const questionList = ref([
         ]
     },
     {
-        topic: '您是無性經驗',
+        topic: '您有無性經驗',
         order: 2,
         options: [
             { name: 'sexualExp', value: 'true', display: '有' },
