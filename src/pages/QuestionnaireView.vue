@@ -38,19 +38,26 @@ const questionList = ref([
         ]
     },
     {
-        topic: '您有無性經驗',
+        topic: '您喜歡下面哪隻狗狗',
         order: 2,
         options: [
-            { name: 'sexualExp', value: 'true', display: '有' },
-            { name: 'sexualExp', value: 'false', display: '無' }
+            { name: 'dog', value: 'dogA', display: '阿寶' },
+            { name: 'dog', value: 'dogB', display: '秋葵' }
         ]
     },
     {
-        topic: '您可否接受婚前性行為',
+        topic: '您下面哪隻貓咪的死忠粉',
         order: 3,
         options: [
-            { name: 'premaritalSex', value: 'true', display: '可以' },
-            { name: 'premaritalSex', value: 'false', display: '不可' }
+            { name: 'cat', value: 'catA', display: '蛋捲' },
+            { name: 'cat', value: 'catB', display: '短褲' },
+            { name: 'cat', value: 'catC', display: '麻糊' },
+            { name: 'cat', value: 'catD', display: '橘皮' },
+            { name: 'cat', value: 'catE', display: '米香' },
+            { name: 'cat', value: 'catF', display: 'Mia' },
+            { name: 'cat', value: 'catG', display: '本丸' },
+            { name: 'cat', value: 'catH', display: '丁滿' },
+            { name: 'cat', value: 'catI', display: '澎澎' },
         ]
     }
 ])
