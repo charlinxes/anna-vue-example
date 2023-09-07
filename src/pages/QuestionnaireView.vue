@@ -38,7 +38,7 @@ const questionList = ref([
         ]
     },
     {
-        topic: '您喜歡下面哪隻狗狗',
+        topic: '您最喜歡下面哪隻狗狗',
         order: 2,
         options: [
             { name: 'dog', value: 'dogA', display: '阿寶' },
@@ -46,16 +46,16 @@ const questionList = ref([
         ]
     },
     {
-        topic: '您下面哪隻貓咪的死忠粉',
+        topic: '您最喜歡下面哪隻貓貓',
         order: 3,
         options: [
             { name: 'cat', value: 'catA', display: '蛋捲' },
             { name: 'cat', value: 'catB', display: '短褲' },
             { name: 'cat', value: 'catC', display: '麻糊' },
-            { name: 'cat', value: 'catD', display: '橘皮' },
             { name: 'cat', value: 'catE', display: '米香' },
-            { name: 'cat', value: 'catF', display: 'Mia' },
+            { name: 'cat', value: 'catD', display: '橘皮' },
             { name: 'cat', value: 'catG', display: '本丸' },
+            { name: 'cat', value: 'catF', display: 'Yia' },
             { name: 'cat', value: 'catH', display: '丁滿' },
             { name: 'cat', value: 'catI', display: '澎澎' },
         ]
