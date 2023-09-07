@@ -19,11 +19,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import QuestionData from '../components/QuestionData.vue'
+import nzh from "nzh/hk";
 
 const currentTab = ref(0)
-const tabs = ref(['問題一', '問題二', '問題三'])
+const tabs = ref([])
 const checkOptions = ref([])
 const showAnswer = ref(false)
 const questionList = ref([
@@ -53,6 +54,15 @@ const questionList = ref([
         ]
     }
 ])
+
+onBeforeMount(() => {
+    questionList.value.forEach((cur) => {
+        tabs.value.push(`問題${nzh.encodeS(cur.order)}`)
+    })
+
+})
+
+
 
 function getCheckOption(option) {
     const index = checkOptions.value.findIndex((cur) => {
