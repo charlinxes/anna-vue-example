@@ -1,16 +1,18 @@
 <template>
     <main style="padding:30px;">
-        <section v-show="!showAnswer">
+        <section v-if="!showAnswer">
             <button v-for="(tab, index) in tabs" class="tab-button" :class="{ active: currentTab === index }"
                 @click="currentTab = index">
                 {{ tab }}
             </button>
-            <QuestionData v-for="(question, index) in questionList" v-show="currentTab === index" :questionData="question"
-                @emitCheckOption="getCheckOption" />
+            <template v-for="(question, index) in questionList">
+                <QuestionData v-if="currentTab === index" :questionData="question" :checkOptions="checkOptions"
+                    @emitCheckOption="getCheckOption" />
+            </template>
             <div style="margin: 20px 0;">已選擇 {{ checkOptions.length + '/' + questionList.length }}</div>
             <div><button :disabled="checkOptions.length < questionList.length" @click="checkAnswer">確認答案</button></div>
         </section>
-        <section v-show="showAnswer">
+        <section v-else>
             <div v-for="option in checkOptions" style="margin-bottom: 20px"> {{ option.topic + '：' +
                 option.checkOption.display }} </div>
             <div><button @click="showAnswer = false">返回</button></div>
@@ -19,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref } from 'vue'
 import QuestionData from '../components/QuestionData.vue'
 import nzh from "nzh/hk";
 
@@ -27,47 +29,46 @@ const currentTab = ref(0)
 const tabs = ref([])
 const checkOptions = ref([])
 const showAnswer = ref(false)
-const questionList = ref([
-    {
-        topic: '您的性別',
-        order: 1,
-        options: [
-            { name: 'sex', value: 'male', display: '男' },
-            { name: 'sex', value: 'female', display: '女' },
-            { name: 'sex', value: 'others', display: '其他' }
-        ]
-    },
-    {
-        topic: '您最喜歡下面哪隻狗狗',
-        order: 2,
-        options: [
-            { name: 'dog', value: 'dogA', display: '阿寶' },
-            { name: 'dog', value: 'dogB', display: '秋葵' }
-        ]
-    },
-    {
-        topic: '您最喜歡下面哪隻貓貓',
-        order: 3,
-        options: [
-            { name: 'cat', value: 'catA', display: '蛋捲' },
-            { name: 'cat', value: 'catB', display: '短褲' },
-            { name: 'cat', value: 'catC', display: '麻糊' },
-            { name: 'cat', value: 'catD', display: '米香' },
-            { name: 'cat', value: 'catE', display: '橘皮' },
-            { name: 'cat', value: 'catF', display: '本丸' },
-            { name: 'cat', value: 'catG', display: 'Yia' },
-            { name: 'cat', value: 'catH', display: '丁滿' },
-            { name: 'cat', value: 'catI', display: '澎澎' },
-        ]
-    }
-])
-
-onBeforeMount(() => {
+const questionList = ref([])
+setTimeout(() => {
+    questionList.value = [
+        {
+            topic: '您的性別',
+            order: 1,
+            options: [
+                { name: 'sex', value: 'male', display: '男' },
+                { name: 'sex', value: 'female', display: '女' },
+                { name: 'sex', value: 'others', display: '其他' }
+            ]
+        },
+        {
+            topic: '您最喜歡下面哪隻狗狗',
+            order: 2,
+            options: [
+                { name: 'dog', value: 'dogA', display: '阿寶' },
+                { name: 'dog', value: 'dogB', display: '秋葵' }
+            ]
+        },
+        {
+            topic: '您最喜歡下面哪隻貓貓',
+            order: 3,
+            options: [
+                { name: 'cat', value: 'catA', display: '蛋捲' },
+                { name: 'cat', value: 'catB', display: '短褲' },
+                { name: 'cat', value: 'catC', display: '麻糊' },
+                { name: 'cat', value: 'catD', display: '米香' },
+                { name: 'cat', value: 'catE', display: '橘皮' },
+                { name: 'cat', value: 'catF', display: '本丸' },
+                { name: 'cat', value: 'catG', display: 'Yia' },
+                { name: 'cat', value: 'catH', display: '丁滿' },
+                { name: 'cat', value: 'catI', display: '澎澎' },
+            ]
+        }
+    ]
     questionList.value.forEach((cur) => {
         tabs.value.push(`問題${nzh.encodeS(cur.order)}`)
     })
-
-})
+}, 3000)
 
 
 
