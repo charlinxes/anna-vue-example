@@ -2,7 +2,7 @@
     <section style="padding:30px">
         <main>
             <div><img class="picA" src="../assets/images/picA.jpg" alt="picA"></div>
-            <div><img class="picB" src="../assets/images/picB.png" alt="picB"></div>
+            <div><img class="picB" src="../assets/images/picB.jpg" alt="picB"></div>
             <div><img class="picC" src="../assets/images/picC.png" alt="picC"></div>
         </main>
         <div style="margin-top: 350px; width: 100px; text-align:center;">
@@ -71,7 +71,7 @@ section {
 
             &.picA {
                 left: 0;
-                top: 10px;
+                top: 0;
             }
 
             &.picB {
@@ -80,7 +80,7 @@ section {
             }
 
             &.picC {
-                top: 155px;
+                top: 137px;
                 left: 100px;
             }
         }
