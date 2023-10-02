@@ -63,6 +63,11 @@ const router = createRouter({
             component: () => import("../pages/QuestionnaireView.vue"),
         },
         {
+            path: "/creditCard",
+            name: "creditCard",
+            component: () => import("../pages/CreditCard.vue"),
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: "notFound",
             component: () => import("../pages/NotFound.vue"),
