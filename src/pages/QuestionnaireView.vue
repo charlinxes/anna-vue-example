@@ -1,34 +1,37 @@
 <template>
-    <main style="padding:30px;">
-        <section v-if="!showAnswer">
-            <button v-for="(tab, index) in tabs" class="tab-button" :class="{ active: currentTab === index }"
-                @click="currentTab = index">
-                {{ tab }}
-            </button>
-            <template v-for="(question, index) in questionList">
-                <QuestionData v-if="currentTab === index" :questionData="question" :checkOptions="checkOptions"
-                    @emitCheckOption="getCheckOption" />
-            </template>
-            <div style="margin: 20px 0;">已選擇 {{ checkOptions.length + '/' + questionList.length }}</div>
-            <div><button :disabled="checkOptions.length < questionList.length" @click="checkAnswer">確認答案</button></div>
-        </section>
-        <section v-else>
-            <div v-for="option in checkOptions" style="margin-bottom: 20px"> {{ option.topic + '：' +
-                option.checkOption.display }} </div>
-            <div><button @click="showAnswer = false">返回</button></div>
-        </section>
-    </main>
+    <section style="padding:3rem">
+        <div v-show="!showAnswer">
+            <div style="margin-bottom:1rem">
+                <button v-for="(item, index) in questionList " @click="curItem = item.order" class="tab-button"
+                    :class="{ active: curItem === index + 1 }"> 問題{{ item.order }} </button>
+                <div v-for=" (item, index) in questionList" v-show="curItem === item.order" style="margin-bottom:1rem">
+                    <QuestionData v-if="curItem === index + 1" :questionData="item" :checkList="checkList"
+                        @emitCheckOption="getCheckOption" />
+                </div>
+            </div>
+            <div style="margin-bottom:1rem">
+                已選擇{{ checkList.length }}/{{ questionList.length }}
+            </div>
+            <div>
+                <button :disabled="checkList.length !== questionList.length" @click="confirmAnswer">確認答案</button>
+            </div>
+        </div>
+        <div v-show="showAnswer">
+            <div v-for=" item  in  checkList ">
+                <div>{{ item.topic + ':' + item.display }}</div>
+            </div>
+            <button @click="showAnswer = false">返回</button>
+        </div>
+    </section>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 import QuestionData from '../components/QuestionData.vue'
-import nzh from "nzh/hk";
 
-const currentTab = ref(0)
-const tabs = ref([])
-const checkOptions = ref([])
+const curItem = ref(1)
 const showAnswer = ref(false)
+const checkList = ref([])
 const questionList = ref([])
 setTimeout(() => {
     questionList.value = [
@@ -63,30 +66,32 @@ setTimeout(() => {
                 { name: 'cat', value: 'catH', display: '丁滿' },
                 { name: 'cat', value: 'catI', display: '澎澎' },
             ]
-        }
+        }, {
+            topic: '您最喜歡下面哪隻豬',
+            order: 4,
+            options: [
+                { name: 'pig', value: 'pigA', display: '喬治' },
+                { name: 'pig', value: 'pigB', display: '佩奇' }
+            ]
+        },
     ]
-    questionList.value.forEach((cur) => {
-        tabs.value.push(`問題${nzh.encodeS(cur.order)}`)
-    })
-}, 3000)
+}, 1000)
 
-
-
-function getCheckOption(option) {
-    const index = checkOptions.value.findIndex((cur) => {
-        return cur.checkOption.name === option.checkOption.name
+function getCheckOption(option, order, topic) {
+    const index = checkList.value.findIndex(cur => {
+        return cur.order === order
     })
     if (index >= 0) {
-        checkOptions.value.splice(index, 1)
+        checkList.value.splice(index, 1)
     }
-    checkOptions.value.push(option)
+    checkList.value.push({ ...option, order: order, topic: topic })
 }
-
-function checkAnswer() {
-    checkOptions.value.sort((a, b) => { return a.order - b.order })
+function confirmAnswer() {
+    checkList.value.sort((a, b) => {
+        return a.order - b.order
+    })
     showAnswer.value = true
 }
-
 </script>
 
 <style>

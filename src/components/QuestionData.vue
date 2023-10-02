@@ -14,23 +14,23 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const props = defineProps(['questionData', 'checkOptions'])
+const props = defineProps(['questionData', 'checkList'])
 const emits = defineEmits(['emitCheckOption'])
 const inputRef = ref([])
 
-const checkItem = props.checkOptions.find((cur) => {
-    return cur.topic === props.questionData.topic
-})
-
 onMounted(() => {
-    if (checkItem) {
-        inputRef.value.find((ele) => ele.value === checkItem.checkOption.value).checked = true
-    }
-})
+    // inputRef.value 陣列包含當前問題的所有選項的單選框 <input type="radio">
+    // props.checkList 陣列包含已經選中的選項
+    // 邏輯：在 inputRef.value 中找出目標的元素，將其勾選
+    const targetInput = inputRef.value.find((elem) => {
+        return props.checkList.find((checkOpt) => elem.value === checkOpt.value)
+    })
+    if (targetInput) targetInput.checked = true
 
+})
 
 function emitCheckOption(option) {
-    emits('emitCheckOption', { ...props.questionData, checkOption: option })
+    emits('emitCheckOption', option, props.questionData.topic, props.questionData.order)
 }
 
 </script>
