@@ -68,6 +68,11 @@ const router = createRouter({
             component: () => import("../pages/CreditCard.vue"),
         },
         {
+            path: "/todoList",
+            name: "todoList",
+            component: () => import("../pages/TodoList.vue"),
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: "notFound",
             component: () => import("../pages/NotFound.vue"),

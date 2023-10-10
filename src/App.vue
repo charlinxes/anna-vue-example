@@ -12,6 +12,7 @@
                 <li><router-link :to="{ name: 'product' }">商品</router-link></li>
                 <li><router-link :to="{ name: 'questionnaire' }">問卷</router-link></li>
                 <li><router-link :to="{ name: 'creditCard' }">信用卡變更</router-link></li>
+                <li><router-link :to="{ name: 'todoList' }">卡片列表</router-link></li>
             </ul>
         </nav>
         <div class="login" @click="log">{{ $store.state.isLogin ? '登出' : '登入' }}</div>
