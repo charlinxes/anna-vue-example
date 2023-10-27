@@ -73,6 +73,11 @@ const router = createRouter({
             component: () => import("../pages/TodoList.vue"),
         },
         {
+            path: "/cakeList",
+            name: "cakeList",
+            component: () => import("../pages/CakeList.vue"),
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: "notFound",
             component: () => import("../pages/NotFound.vue"),
